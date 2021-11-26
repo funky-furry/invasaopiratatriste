@@ -11,8 +11,6 @@ var angle = 20;
 function preload() {
   backgroundImage = loadImage("./assets/background.gif");
   towerImage = loadImage("./assets/tower.png");
-  cannonImage = loadImage("./assets/canon.png");
-  cannonBaseImage = loadImage("./assets/cannonBase.png");
 }
 function setup() {
 
@@ -28,7 +26,7 @@ function setup() {
   tower = Bodies.rectangle(160, 350, 160, 310, options);
   World.add(world, tower);
 
-  cannon = new Cannon(180,110,130,100, angle, cannonImage,cannonBaseImage);
+  cannon = new Cannon(180,110,130,100, angle);
 }
 
 function draw() {
