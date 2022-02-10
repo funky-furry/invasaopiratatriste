@@ -17,7 +17,7 @@ function setup() {
   engine = Engine.create();
   world = engine.world;
 
-  cannon = new Cannon(180,110,130,100,90);
+  cannon = new Cannon(180,110,130,100,angle);
 
   options = { 
     isStatic: true,
@@ -27,7 +27,7 @@ function setup() {
   tower = Bodies.rectangle(160, 350, 160, 310, options);
   World.add(world, tower);
 
-
+  angleMode(DEGREES);
 }
 
 function draw() {
