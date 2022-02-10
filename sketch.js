@@ -6,6 +6,7 @@ var engine, world,ground;
 var ground, tower, cannon;
 var backgroundImage, towerImage;
 var angle = 20;
+var ball;
 
 function preload() {
   backgroundImage = loadImage("./assets/background.gif");
@@ -18,6 +19,7 @@ function setup() {
   world = engine.world;
 
   cannon = new Cannon(180,110,130,100,angle);
+  ball = new CannonBall(cannon.x,cannon.y);
 
   options = { 
     isStatic: true,
@@ -36,6 +38,7 @@ function draw() {
   Engine.update(engine);
 
   cannon.display();
+  ball.display(); 
   
   rect(ground.position.x, ground.position.y, width*2, 1);
   push();
