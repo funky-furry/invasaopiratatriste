@@ -37,6 +37,9 @@ function draw() {
   Engine.update(engine);
 
   cannon.display(); 
+  for(var i = 0; i < ballGroup.length; i++){
+    ballGroup[i].display();
+  }
 
   
   rect(ground.position.x, ground.position.y, width*2, 1);
@@ -48,7 +51,7 @@ function draw() {
 
 function keyReleased() {
   if (keyCode === 32) {
-    ball.shoot(cannon.angle);
+    ballGroup[ballGroup.length - 1].shoot(cannon.angle);
   }
 }
 
