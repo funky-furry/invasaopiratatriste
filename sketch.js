@@ -6,7 +6,7 @@ var engine, world,ground;
 var ground, tower, cannon;
 var backgroundImage, towerImage;
 var angle = 20;
-var ball;
+var ballGroup = [];
 
 function preload() {
   backgroundImage = loadImage("./assets/background.gif");
@@ -19,7 +19,6 @@ function setup() {
   world = engine.world;
 
   cannon = new Cannon(180,110,130,100,angle);
-  ball = new CannonBall(cannon.x,cannon.y);
 
   options = { 
     isStatic: true,
@@ -37,12 +36,25 @@ function draw() {
  
   Engine.update(engine);
 
-  cannon.display();
-  ball.display(); 
+  cannon.display(); 
+
   
   rect(ground.position.x, ground.position.y, width*2, 1);
   push();
   imageMode(CENTER);
   image(towerImage, tower.position.x, tower.position.y,160, 310);
   pop();
+}
+
+function keyReleased() {
+  if (keyCode === 32) {
+    ball.shoot(cannon.angle);
+  }
+}
+
+function keyPressed() {
+  if (keyCode === 32) {
+    var ball = new CannonBall(cannon.x, cannon.y);
+    ballGroup.push(ball);
+  }
 }
