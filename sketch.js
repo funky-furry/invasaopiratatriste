@@ -7,6 +7,7 @@ var ground, tower, cannon;
 var backgroundImage, towerImage;
 var angle = 20;
 var ballGroup = [];
+var boat;
 
 function preload() {
   backgroundImage = loadImage("./assets/background.gif");
@@ -19,7 +20,7 @@ function setup() {
   world = engine.world;
 
   cannon = new Cannon(180,110,130,100,angle);
-
+  boat = new Boat(width - 79, height - 10, 170, 170, -20);
   options = { 
     isStatic: true,
   };
@@ -37,6 +38,8 @@ function draw() {
   Engine.update(engine);
 
   cannon.display(); 
+  Matter.Body.setVelocity(boat.body, {x:-0.9,y:0})
+  boat.display();
   for(var i = 0; i < ballGroup.length; i++){
     ballGroup[i].display();
   }
