@@ -25,4 +25,9 @@ class CannonBall{
         Matter.Body.setVelocity(this.body, { x: velocity.x * (180 / 3.14), y: velocity.y * (180 / 3.14)})
         Matter.Body.setStatic(this.body, false);
     }
-}
+    remove(i){
+        if(ballGroup[i]){
+            World.remove(world, this.body);
+            delete ballGroup[i];
+        }
+}}

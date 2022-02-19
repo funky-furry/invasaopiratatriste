@@ -9,7 +9,7 @@ class Cannon {
       this.cannon_base = loadImage("assets/cannonBase.png");
     }
     display() {
-      console.log(this.angle);
+      //console.log(this.angle);
       if (keyIsDown(UP_ARROW) && this.angle >= -50) {
         this.angle = this.angle - 1;
       }
