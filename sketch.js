@@ -42,6 +42,7 @@ function draw() {
   showBoats();
   for(var i = 0; i < ballGroup.length; i++){
     ballGroup[i].display();
+    collisionWithBoat(i);
   }
 
   
@@ -58,6 +59,10 @@ function keyReleased() {
   }
 }
 
+function collisionWithBoat(index){
+    boats[i].remove(i);
+}
+
 function keyPressed() {
   if (keyCode === 32) {
     var ball = new CannonBall(cannon.x, cannon.y);
@@ -68,7 +73,9 @@ function keyPressed() {
 function showBoats() {
   if (boatGroup.length > 0){
     if(boatGroup[boatGroup.length - 1] == undefined||boatGroup[boatGroup.length - 1].body.position.x < width - 300){
-      boat = new Boat(width, height - 100, 170, 170, -60);
+      var positions = [-40, -60, -70, -20];
+      var posY = random(positions);
+      boat = new Boat(width, height - 100, 170, 170, posY);
       boatGroup.push(boat);
     }
     for(var i = 0; i < boatGroup.length; i ++){
