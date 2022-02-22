@@ -9,11 +9,16 @@ var angle = 20;
 var ballGroup = [];
 var boat;
 var boatGroup = [];
+var boatAnimation = [];
+var boatSpriteSheet, boatMetadata;
 
 function preload() {
   backgroundImage = loadImage("./assets/background.gif");
   towerImage = loadImage("./assets/tower.png");
+  boatMetadata = loadJSON("./assets/boat/ship-sailing.json");
+  boatSpriteSheet =  loadImage("./assets/boat/ship-sailing.png");
 }
+
 function setup() {
 
   canvas = createCanvas(1200, 600);
@@ -31,6 +36,14 @@ function setup() {
   World.add(world, tower);
 
   angleMode(DEGREES);
+
+  var frames = boatMetadata.frames;
+  for(var i = 0; i < frames.length; i++) {
+    var pos = frames[i].frame;
+    var img = boatSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
+    boatAnimation.push(img);
+  }
+
 }
 
 function draw() {
@@ -92,17 +105,18 @@ function showBoats() {
     if(boatGroup[boatGroup.length - 1] == undefined||boatGroup[boatGroup.length - 1].body.position.x < width - 300){
       var positions = [-40, -60, -70, -20];
       var posY = random(positions);
-      boat = new Boat(width, height - 100, 170, 170, posY);
+      boat = new Boat(width, height - 100, 170, 170, posY, boatAnimation);
       boatGroup.push(boat);
     }
     for(var i = 0; i < boatGroup.length; i ++){
       if(boatGroup[i]){
         boatGroup[i].display();
+        boatGroup[i].animate();
         Matter.Body.setVelocity(boatGroup[i].body, {x:-0.9,y:0});
       }
     }
   }else{
-    boat = new Boat(width, height - 100, 170, 170, -60);
+    boat = new Boat(width, height - 100, 170, 170, -60, boatAnimation);
     boatGroup.push(boat);
   }
   
