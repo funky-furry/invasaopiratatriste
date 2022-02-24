@@ -11,12 +11,16 @@ var boat;
 var boatGroup = [];
 var boatAnimation = [];
 var boatSpriteSheet, boatMetadata;
+var boatDeadSpriteSheet, boatDeadMetadata;
+var boatDeadAnimation = [];
 
 function preload() {
   backgroundImage = loadImage("./assets/background.gif");
   towerImage = loadImage("./assets/tower.png");
   boatMetadata = loadJSON("./assets/boat/ship-sailing.json");
   boatSpriteSheet =  loadImage("./assets/boat/ship-sailing.png");
+  boatDeadSpriteSheet = loadImage("./assets/boat/broken-ship-01.png");
+  boatDeadMetadata = loadJSON("./assets/boat/broken-ship-01.json");
 }
 
 function setup() {
@@ -43,6 +47,14 @@ function setup() {
     var img = boatSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
     boatAnimation.push(img);
   }
+
+  var frames2 = boatDeadMetadata.frames;
+  for(var i = 0; i < frames2.length; i++){
+    var pos = frames2[i].frame;
+    var img = boatDeadSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
+    boatDeadAnimation.push(img);
+  }
+  
 
 }
 
