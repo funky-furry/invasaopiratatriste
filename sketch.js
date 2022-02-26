@@ -16,6 +16,7 @@ var boatDeadAnimation = [];
 var backgroundSound, cannonExplode, pirateLaugh;
 var isLaughing = false;
 var ballshoot = false;
+var pontuacao = 0;
 
 function preload() {
   backgroundImage = loadImage("./assets/background.gif");
@@ -79,7 +80,6 @@ function draw() {
   for(var i = 0; i < ballGroup.length; i++){
     showcannonballs(ballGroup[i],i);  
     collisionWithBoat(i);
-    
   }
 
 
@@ -88,6 +88,11 @@ function draw() {
   imageMode(CENTER);
   image(towerImage, tower.position.x, tower.position.y,160, 310);
   pop();
+
+  textSize(40);
+  fill("#6d4c41");
+  textAlign(CENTER, CENTER);
+  text(`Pontuação: ${pontuacao}`, width - 200, 50);
 }
 function showcannonballs(ball,index){
   if(ball != undefined){
@@ -112,6 +117,7 @@ function collisionWithBoat(index){
         var collision = Matter.SAT.collides(ballGroup[index].body,boatGroup[i].body);
         console.log(collision);
         if(collision.collided){
+          pontuacao += 5;
           boatGroup[i].remove(i);
           ballGroup[index].remove(index);
           ballshoot = false;
