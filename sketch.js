@@ -71,7 +71,8 @@ function draw() {
     
   }
 
-  
+  gameOver();
+
   rect(ground.position.x, ground.position.y, width*2, 1);
   push();
   imageMode(CENTER);
@@ -132,4 +133,18 @@ function showBoats() {
     boatGroup.push(boat);
   }
   
+}
+
+function gameOver() {
+  swal({
+    title: "Fim de Jogo!!!",
+    text: "Obrigado Por Jogar",
+    imageUrl: "https://raw.githubusercontent.com/whitehatjr/PiratesInvasion/main/assets/boat.png",
+    confirmButtonText: "Jogar Novamente",
+    function (isConfirm) {
+      if(isConfirm) {
+        localtion.reaload();
+      }
+    }
+  });
 }
