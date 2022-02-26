@@ -39,7 +39,7 @@ class Boat {
             World.remove(world, this.body);
             setTimeout(() => {
                 delete boatGroup[index];
-            }, 1000);
+            }, 4000);
         }
     }
 }

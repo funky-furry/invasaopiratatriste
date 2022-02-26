@@ -13,10 +13,12 @@ class CannonBall{
         
     }
     display(){
-        push();
-        imageMode(CENTER);
-        image(this.image,this.body.position.x,this.body.position.y,this.raio,this.raio);
-        pop();
+        if(this.body.position.x > 200){
+            push();
+            imageMode(CENTER);
+            image(this.image,this.body.position.x,this.body.position.y,this.raio,this.raio);
+            pop();
+        }
     }
     shoot(angle) {
         var newAngle = (angle - 30) * (3.14 / 180);

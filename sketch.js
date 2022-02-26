@@ -13,6 +13,9 @@ var boatAnimation = [];
 var boatSpriteSheet, boatMetadata;
 var boatDeadSpriteSheet, boatDeadMetadata;
 var boatDeadAnimation = [];
+var backgroundSound, cannonExplode, pirateLaugh;
+var isLaughing = false;
+var ballshoot = false;
 
 function preload() {
   backgroundImage = loadImage("./assets/background.gif");
@@ -21,6 +24,10 @@ function preload() {
   boatSpriteSheet =  loadImage("./assets/boat/ship-sailing.png");
   boatDeadSpriteSheet = loadImage("./assets/boat/broken-ship-01.png");
   boatDeadMetadata = loadJSON("./assets/boat/broken-ship-01.json");
+  backgroundSound = loadSound("./assets/background_music.mp3");
+  cannonExplode = loadSound("./assets/cannon_explosion.mp3");
+  pirateLaugh = loadSound("./assets/pirate_laugh.mp3");
+
 }
 
 function setup() {
@@ -60,6 +67,10 @@ function setup() {
 
 function draw() {
   image(backgroundImage, 0, 0, width, height);
+  if(!backgroundSound.isPlaying()){
+    backgroundSound.play();
+    backgroundSound.setVolume(0.5);
+  }
  
   Engine.update(engine);
 
@@ -71,7 +82,6 @@ function draw() {
     
   }
 
-  gameOver();
 
   rect(ground.position.x, ground.position.y, width*2, 1);
   push();
@@ -84,12 +94,15 @@ function showcannonballs(ball,index){
     ball.display();
     if(ball.body.position.x > width || ball.body.position.y > height - 50){
       ball.remove(index);
+      ballshoot = false;
     }
   }
 }
 function keyReleased() {
-  if (keyCode === 32) {
+  if (keyCode === 32 && !ballshoot) {
     ballGroup[ballGroup.length - 1].shoot(cannon.angle);
+    cannonExplode.play();
+    ballshoot = true;
   }
 }
 
@@ -101,6 +114,7 @@ function collisionWithBoat(index){
         if(collision.collided){
           boatGroup[i].remove(i);
           ballGroup[index].remove(index);
+          ballshoot = false;
         }
       }
     }
@@ -126,6 +140,15 @@ function showBoats() {
         boatGroup[i].display();
         boatGroup[i].animate();
         Matter.Body.setVelocity(boatGroup[i].body, {x:-0.9,y:0});
+        var collision = Matter.SAT.collides(tower,boatGroup[i].body);
+        if(collision.collided){
+          gameOver();
+          if(!isLaughing){
+            isLaughing = true;
+            pirateLaugh.play();
+          }
+        
+        }
       }
     }
   }else{
@@ -141,10 +164,10 @@ function gameOver() {
     text: "Obrigado Por Jogar",
     imageUrl: "https://raw.githubusercontent.com/whitehatjr/PiratesInvasion/main/assets/boat.png",
     confirmButtonText: "Jogar Novamente",
-    function (isConfirm) {
-      if(isConfirm) {
-        localtion.reaload();
-      }
+    
+  },function (isConfirm) {
+    if(isConfirm) {
+      location.reload();
     }
   });
 }
